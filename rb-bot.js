@@ -1,9 +1,9 @@
 import { createAudioPlayer, joinVoiceChannel } from '@discordjs/voice';
 import { Client, GatewayIntentBits } from 'discord.js';
 import dotenv from 'dotenv';
-import { playRandomSound, greetAll } from './sound-functions.js'; // Note the .js extension
+import { playRandomSound, greetAll } from './sound-functions.js';
 
-dotenv.config(); // For handling token securely
+dotenv.config();
 
 const client = new Client({
     intents: [
@@ -23,7 +23,7 @@ client.once('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
 });
 
-// Message reaction feature
+// Message reactions
 client.on('messageCreate', message => {
     if (message.content === '!rb') {
         message.react('🐔')
@@ -51,27 +51,27 @@ client.on('messageCreate', async message => {
                 adapterCreator: voiceChannel.guild.voiceAdapterCreator,
             });
 
+            console.log('Riccardo Bensoni has joined the voice channel.');
+
             const player = createAudioPlayer();
             connection.subscribe(player);
 
             // Play sound as soon as bot joins the voice channel
             greetAll(player);
 
-            // Set interval to play sound every 5 minutes (300000 ms)
+            // Set interval to play a random sound
             const interval = setInterval(() => {
-                try {
-                    const members = voiceChannel.members.filter(member => !member.user.bot);
-                    if (members.size > 0) {
-                        playRandomSound(player); // Pass the player to the function
-                    } else {
-                        console.log('No members in the voice channel. Stopping sound playback.');
-                        clearInterval(interval);
-                        connection.destroy(); // Disconnect if no members are present
-                    }
-                } catch (error) {
-                    console.error('Error in interval check:', error.message);
+
+                const members = voiceChannel.members.filter(member => !member.user.bot);
+                if (members.size > 0) {
+                    playRandomSound(player); // Pass the player to the function
+                } else {
+                    console.log('No members in the voice channel. Stopping sound playback.');
+                    clearInterval(interval);
+                    connection.destroy(); // Disconnect if no members are present
                 }
-            }, 1000 * 60 * 1); // 5 minutes
+
+            }, 1000 * 60 * 5);
         } catch (error) {
             console.error('Error joining voice channel:', error.message);
         }
