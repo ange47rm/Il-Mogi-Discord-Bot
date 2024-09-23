@@ -14,8 +14,6 @@ const client = new Client({
     ]
 });
 
-console.log('test')
-
 // When the bot is ready
 client.once('ready', () => {
     console.log('Richard Benson Discord BOT is running')
