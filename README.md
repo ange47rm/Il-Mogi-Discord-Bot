@@ -21,3 +21,5 @@ Any changes made to the code, are to be deployed manually to Replit (update the 
 Uptimerobot is used to ping the bot on Replit every 5 minutes to keep it alive.
 
 Uptimerobot status monitor link: https://stats.uptimerobot.com/amAF6Re2Ut
+
+Invite the bot to your Discord server using the following link: [text](https://discord.com/oauth2/authorize?client_id=1287735971529621610&permissions=8&integration_type=0&scope=bot)
