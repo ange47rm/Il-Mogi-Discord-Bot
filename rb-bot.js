@@ -80,5 +80,5 @@ client.on('messageCreate', async message => {
 
 // Log the bot in using the token from your .env file
 client.login(process.env.TOKEN).catch(error => {
-    console.error('Error logging in:', error.message);
+    console.error('Error logging in TEST:', error.message);
 });
