@@ -71,7 +71,7 @@ client.on('messageCreate', async message => {
                     connection.destroy(); // Disconnect if no members are present
                 }
 
-            }, 1000 * 60 * 5);
+            }, 1000 * 60 * 3);
         } catch (error) {
             console.error('Error joining voice channel:', error.message);
         }
