@@ -10,7 +10,7 @@ Pull the repository and create an `.env` file based on the `.env.sample` file, a
 
 Run `npm install` to install dependencies.
 
-Run `node rb-bot.js` to run the bot locally.
+Run `node bot.js` to run the bot locally.
 
 **Other information**
 
