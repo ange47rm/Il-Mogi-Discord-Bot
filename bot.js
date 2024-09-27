@@ -1,8 +1,8 @@
 import { createAudioPlayer, joinVoiceChannel } from '@discordjs/voice';
 import { Client, GatewayIntentBits } from 'discord.js';
 import dotenv from 'dotenv';
-import { playRandomSound, greetAll } from './sound-functions.js';
-import { chatCommands } from './chatCommands.js';
+import { playRandomSound, greetAll } from './helpers/soundFunctions.js';
+import { chatCommands } from './helpers/chatCommands.js';
 
 dotenv.config();
 
