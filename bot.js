@@ -2,8 +2,11 @@ import { createAudioPlayer, joinVoiceChannel } from '@discordjs/voice';
 import { Client, GatewayIntentBits } from 'discord.js';
 import dotenv from 'dotenv';
 import { playRandomSound, greetAll } from './sound-functions.js';
+import { chatCommands } from './chatCommands.js';
 
 dotenv.config();
+
+const botName = "Il Mogi Discord Bot"
 
 const client = new Client({
     intents: [
@@ -16,7 +19,7 @@ const client = new Client({
 
 // When the bot is ready
 client.once('ready', () => {
-    console.log('Richard Benson Discord BOT is running')
+    console.log(`${botName} is running`)
     console.log('')
     console.log('Author: github.com/ange47rm')
     console.log('')
@@ -25,12 +28,12 @@ client.once('ready', () => {
 
 // Message reactions
 client.on('messageCreate', message => {
-    if (message.content === '!rb') {
+    if (message.content === chatCommands.help) {
         message.react('🐔')
 
         const helpMessage = `
-        **Richard Benson Discord BOT - Comandi:**
-        - **!rb-aiutame-tu**: Invita Riccardo Bensoni alla chat vocale.
+        **${botName} - Comandi:**
+        - **${chatCommands.joinVoiceChannel}*: Invita Il Mogi alla chat vocale.
                 `;
 
         message.reply(helpMessage);
@@ -39,10 +42,10 @@ client.on('messageCreate', message => {
 
 // Join and play sounds in a voice channel
 client.on('messageCreate', async message => {
-    if (message.content === '!rb-aiutame-tu' && message.member.voice.channel) {
-        message.react('🐔')
+    const voiceChannel = message.member.voice.channel;
 
-        const voiceChannel = message.member.voice.channel;
+    if (message.content === chatCommands.joinVoiceChannel && voiceChannel) {
+        message.react('🐔')
 
         try {
             const connection = joinVoiceChannel({
@@ -51,7 +54,7 @@ client.on('messageCreate', async message => {
                 adapterCreator: voiceChannel.guild.voiceAdapterCreator,
             });
 
-            console.log('Riccardo Bensoni has joined the voice channel.');
+            console.log('Il Mogi has joined the voice channel.');
 
             const player = createAudioPlayer();
             connection.subscribe(player);
@@ -62,16 +65,16 @@ client.on('messageCreate', async message => {
             // Set interval to play a random sound
             const interval = setInterval(() => {
 
-                const members = voiceChannel.members.filter(member => !member.user.bot);
-                if (members.size > 0) {
-                    playRandomSound(player); // Pass the player to the function
+                const voiceChannelMembers = voiceChannel.members.filter(member => !member.user.bot);
+                if (voiceChannelMembers.size > 0) {
+                    playRandomSound(player);
                 } else {
                     console.log('No members in the voice channel. Stopping sound playback.');
                     clearInterval(interval);
                     connection.destroy(); // Disconnect if no members are present
                 }
 
-            }, 1000 * 60 * 3);
+            }, 1000 * 60 * 5);
         } catch (error) {
             console.error('Error joining voice channel:', error.message);
         }
