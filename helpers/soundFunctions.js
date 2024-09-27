@@ -8,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export const greetAll = (player) => {
-    const resource = createAudioResource(path.join(__dirname, 'assets', "ciaooo.mp3"));
+    const resource = createAudioResource(path.join(__dirname, '../assets', "ciaooo.mp3"));
     player.play(resource);
 }
 
