@@ -2,5 +2,6 @@
 
 export const chatCommands = {
     help: "!mogi-help",
-    joinVoiceChannel: "!mogi-join"
+    joinVoiceChannel: "!mogi-join",
+    helicopter: "!helicopter"
 }

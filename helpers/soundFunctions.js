@@ -1,20 +1,33 @@
 import fs from 'fs';
 import path from 'path';
-import { createAudioResource } from '@discordjs/voice';
+import { createAudioResource, createAudioPlayer, joinVoiceChannel } from '@discordjs/voice';
 import { fileURLToPath } from 'url';
 
-// Create __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const assetsPath = path.resolve(__filename, '../../assets');
 
 export const greetAll = (player) => {
-    const resource = createAudioResource(path.join(__dirname, '../assets', "ciaooo.mp3"));
+    const resource = createAudioResource(path.join(assetsPath, "ahhh.mp3"));
+    player.play(resource);
+}
+
+export const playSound = (voiceChannel, sound) => {
+    const connection = joinVoiceChannel({
+        channelId: voiceChannel.id,
+        guildId: voiceChannel.guild.id,
+        adapterCreator: voiceChannel.guild.voiceAdapterCreator,
+    });
+
+    const player = createAudioPlayer();
+    connection.subscribe(player);
+
+    const resource = createAudioResource(path.join(assetsPath, sound));
     player.play(resource);
 }
 
 export const playRandomSound = (player) => {
     try {
-        const sounds = fs.readdirSync(path.join(__dirname, 'assets')).filter(file => file.endsWith('.mp3') && file != 'ciaooo.mp3');
+        const sounds = fs.readdirSync(assetsPath).filter(file => file.endsWith('.mp3') && file != 'ciaooo.mp3');
         if (sounds.length === 0) {
             console.log('No audio files found in the assets folder.');
             return;
@@ -22,7 +35,7 @@ export const playRandomSound = (player) => {
 
         // Pick a random sound
         const randomSound = sounds[Math.floor(Math.random() * sounds.length)];
-        const resource = createAudioResource(path.join(__dirname, 'assets', randomSound));
+        const resource = createAudioResource(path.join(assetsPath, randomSound));
 
         player.play(resource);
 
@@ -37,3 +50,4 @@ export const playRandomSound = (player) => {
         console.error('Error in playRandomSound:', error.message);
     }
 };
+

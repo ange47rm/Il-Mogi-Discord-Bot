@@ -25,3 +25,4 @@
 
 1. Do not play sounds that have already been played (mark audio clips as "played" and do not replay until all clips have been played)
 2. Play specific sound when user enters/leaves the chat
+3. Remove greetAll function (improve and use playSound - remove joinChannel from it)

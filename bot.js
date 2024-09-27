@@ -1,7 +1,7 @@
 import { createAudioPlayer, joinVoiceChannel } from '@discordjs/voice';
 import { Client, GatewayIntentBits } from 'discord.js';
 import dotenv from 'dotenv';
-import { playRandomSound, greetAll } from './helpers/soundFunctions.js';
+import { playRandomSound, greetAll, playSound } from './helpers/soundFunctions.js';
 import { chatCommands } from './helpers/chatCommands.js';
 
 dotenv.config();
@@ -33,12 +33,21 @@ client.on('messageCreate', message => {
 
         const helpMessage = `
         **${botName} - Comandi:**
-        - **${chatCommands.joinVoiceChannel}*: Invita Il Mogi alla chat vocale.
+        - *${chatCommands.joinVoiceChannel}*: Invita Il Mogi alla chat vocale.
+        - *${chatCommands.helicopter}*: Helicoper helicopter.
                 `;
 
         message.reply(helpMessage);
     }
 });
+
+// Play specific sound
+client.on('messageCreate', message => {
+    if (message.content === chatCommands.helicopter) {
+        playSound(message.member.voice.channel, "helicopter-helicopter.mp3")
+        message.react('🚁')
+    }
+})
 
 // Join and play sounds in a voice channel
 client.on('messageCreate', async message => {
@@ -54,6 +63,8 @@ client.on('messageCreate', async message => {
                 adapterCreator: voiceChannel.guild.voiceAdapterCreator,
             });
 
+            message.reply("Pronto");
+
             console.log('Il Mogi has joined the voice channel.');
 
             const player = createAudioPlayer();
@@ -61,6 +72,8 @@ client.on('messageCreate', async message => {
 
             // Play sound as soon as bot joins the voice channel
             greetAll(player);
+
+            const timeInterval = 1000 * 60 * 3;
 
             // Set interval to play a random sound
             const interval = setInterval(() => {
@@ -74,7 +87,7 @@ client.on('messageCreate', async message => {
                     connection.destroy(); // Disconnect if no members are present
                 }
 
-            }, 1000 * 60 * 5);
+            }, timeInterval);
         } catch (error) {
             console.error('Error joining voice channel:', error.message);
         }
