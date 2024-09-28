@@ -12,11 +12,7 @@ export const greetAll = (player) => {
 }
 
 export const playSound = (voiceChannel, sound) => {
-    const connection = joinVoiceChannel({
-        channelId: voiceChannel.id,
-        guildId: voiceChannel.guild.id,
-        adapterCreator: voiceChannel.guild.voiceAdapterCreator,
-    });
+    const connection = joinVoiceChat(voiceChannel)
 
     const player = createAudioPlayer();
     connection.subscribe(player);
@@ -51,3 +47,12 @@ export const playRandomSound = (player) => {
     }
 };
 
+export const joinVoiceChat = (voiceChannel) => {
+    const voiceConnection = joinVoiceChannel({
+        channelId: voiceChannel.id,
+        guildId: voiceChannel.guild.id,
+        adapterCreator: voiceChannel.guild.voiceAdapterCreator,
+    });
+
+    return voiceConnection;
+}

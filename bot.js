@@ -63,17 +63,17 @@ client.on('messageCreate', async message => {
                 adapterCreator: voiceChannel.guild.voiceAdapterCreator,
             });
 
+            const player = createAudioPlayer();
+            connection.subscribe(player);
+
             message.reply("Pronto");
 
             console.log('Il Mogi has joined the voice channel.');
 
-            const player = createAudioPlayer();
-            connection.subscribe(player);
-
             // Play sound as soon as bot joins the voice channel
             greetAll(player);
 
-            const timeInterval = 1000 * 60 * 3;
+            const timeInterval = 1000 * 60 * 4;
 
             // Set interval to play a random sound
             const interval = setInterval(() => {
