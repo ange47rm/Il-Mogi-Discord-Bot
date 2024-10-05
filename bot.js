@@ -28,14 +28,14 @@ client.once('ready', () => {
 
 // Message reactions
 client.on('messageCreate', message => {
-    if (message.content === chatCommands.help) {
+    if (message.content === chatCommands.help.cmd) {
         message.react('🐔')
 
-        const helpMessage = `
-        **${botName} - Comandi:**
-        - *${chatCommands.joinVoiceChannel}*: Invita Il Mogi alla chat vocale.
-        - *${chatCommands.helicopter}*: Helicoper helicopter.
-                `;
+        let helpMessage = "Lista comandi\n";
+
+        for (const [_, value] of Object.entries(chatCommands)) {
+            helpMessage += `• **${value.cmd}** - *${value.description}*\n`;
+        }
 
         message.reply(helpMessage);
     }
@@ -43,9 +43,16 @@ client.on('messageCreate', message => {
 
 // Play specific sound
 client.on('messageCreate', message => {
-    if (message.content === chatCommands.helicopter) {
+    if (message.content === chatCommands.helicopter.cmd) {
         playSound(message.member.voice.channel, "helicopter-helicopter.mp3")
         message.react('🚁')
+    }
+})
+
+client.on('messageCreate', message => {
+    if (message.content === chatCommands.yeahBoy.cmd) {
+        playSound(message.member.voice.channel, "yeah-boi.mp3")
+        message.react('👍🏿')
     }
 })
 
@@ -53,7 +60,7 @@ client.on('messageCreate', message => {
 client.on('messageCreate', async message => {
     const voiceChannel = message.member.voice.channel;
 
-    if (message.content === chatCommands.joinVoiceChannel && voiceChannel) {
+    if (message.content === chatCommands.joinVoiceChannel.cmd && voiceChannel) {
         message.react('🐔')
 
         try {
