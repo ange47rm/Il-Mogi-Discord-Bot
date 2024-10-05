@@ -22,17 +22,27 @@ export const playSound = (voiceChannel, sound) => {
 }
 
 export const playRandomSound = (player) => {
+    let remainingSounds = [];
+    let playedSounds = [];
+
     try {
-        const sounds = fs.readdirSync(assetsPath).filter(file => file.endsWith('.mp3') && file != 'ciaooo.mp3');
-        if (sounds.length === 0) {
-            console.log('No audio files found in the assets folder.');
-            return;
+        if (remainingSounds.length === 0) {
+            const sounds = fs.readdirSync(assetsPath).filter(file => file.endsWith('.mp3') && file != 'ciaooo.mp3');
+
+            if (sounds.length === 0) {
+                console.log('No audio files found in the assets folder.');
+                return;
+            }
+
+            remainingSounds = shuffleArray(sounds);
+            playedSounds = [];
         }
 
-        // Pick a random sound
-        const randomSound = sounds[Math.floor(Math.random() * sounds.length)];
-        const resource = createAudioResource(path.join(assetsPath, randomSound));
+        const randomSound = remainingSounds.pop();
 
+        playedSounds.push(randomSound);
+
+        const resource = createAudioResource(path.join(assetsPath, randomSound));
         player.play(resource);
 
         player.on('idle', () => {
@@ -45,6 +55,15 @@ export const playRandomSound = (player) => {
     } catch (error) {
         console.error('Error in playRandomSound:', error.message);
     }
+};
+
+// Function to shuffle an array (Fisher-Yates shuffle)
+const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
 };
 
 export const joinVoiceChat = (voiceChannel) => {
