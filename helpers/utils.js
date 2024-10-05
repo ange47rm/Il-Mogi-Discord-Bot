@@ -6,6 +6,8 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const assetsPath = path.resolve(__filename, '../../assets');
 
+// SOUND FUNCTIONS
+
 export const greetAll = (player) => {
     const resource = createAudioResource(path.join(assetsPath, "ahhh.mp3"));
     player.play(resource);
@@ -17,14 +19,13 @@ export const playSound = (voiceChannel, sound) => {
     const player = createAudioPlayer();
     connection.subscribe(player);
 
-    const resource = createAudioResource(path.join(assetsPath, sound));
-    player.play(resource);
+    const audioResource = createAudioResource(path.join(assetsPath, sound));
+    player.play(audioResource);
 }
 
 let remainingSounds = [];
 let playedSounds = [];
 
-// Array of files you want to exclude
 const excludedFiles = ['ciaooo.mp3'];
 
 export const playRandomSound = (player) => {
@@ -60,6 +61,8 @@ export const playRandomSound = (player) => {
     }
 };
 
+// MISC FUNCTIONS
+
 // Fisher-Yates shuffle
 const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -78,3 +81,7 @@ export const joinVoiceChat = (voiceChannel) => {
 
     return voiceConnection;
 }
+
+// export const leaveVoiceChat = (voiceChannel) => {
+
+// }

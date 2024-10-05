@@ -1,12 +1,12 @@
 import { createAudioPlayer, joinVoiceChannel } from '@discordjs/voice';
 import { Client, GatewayIntentBits } from 'discord.js';
 import dotenv from 'dotenv';
-import { playRandomSound, greetAll, playSound } from './helpers/soundFunctions.js';
+import { playRandomSound, greetAll, playSound, joinVoiceChat } from './helpers/utils.js';
 import { chatCommands } from './helpers/chatCommands.js';
 
 dotenv.config();
 
-const botName = "Il Mogi Discord Bot"
+export const botName = "Il Mogi Bot"
 
 const client = new Client({
     intents: [
@@ -64,11 +64,7 @@ client.on('messageCreate', async message => {
         message.react('🐔')
 
         try {
-            const connection = joinVoiceChannel({
-                channelId: voiceChannel.id,
-                guildId: voiceChannel.guild.id,
-                adapterCreator: voiceChannel.guild.voiceAdapterCreator,
-            });
+            const connection = joinVoiceChat(voiceChannel)
 
             const player = createAudioPlayer();
             connection.subscribe(player);
