@@ -82,6 +82,7 @@ export const joinVoiceChat = (voiceChannel) => {
     return voiceConnection;
 }
 
-// export const leaveVoiceChat = (voiceChannel) => {
-
-// }
+export const leaveVoiceChat = (connection) => {
+    console.log('No members left in the voice channel. Leaving...');
+    connection.destroy();
+};

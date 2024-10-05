@@ -23,6 +23,8 @@
 
 ## NEXT (TO-DO)
 
-1. Do not play sounds that have already been played (mark audio clips as "played" and do not replay until all clips have been played)
-2. Play specific sound when user enters/leaves the chat
-3. Remove greetAll function (improve and use playSound - remove joinChannel from it)
+0. Fix bot not leaving the call when all users leave.
+1. Play specific sound when user enters/leaves the chat
+2. Remove greetAll function (improve and use playSound - remove joinChannel from it)
+3. Have bot join the voice channel as soon as there are members in the call (no need to use !join)
+4. Add eslint

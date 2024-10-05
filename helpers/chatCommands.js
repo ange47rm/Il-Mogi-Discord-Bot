@@ -1,6 +1,6 @@
-import { botName } from "../bot";
-
 // List of commands to be used in Discord text chat
+
+const botName = "Il Mogi Bot";
 
 export const chatCommands = {
     help: { cmd: "!help", description: "Lista comandi" },
