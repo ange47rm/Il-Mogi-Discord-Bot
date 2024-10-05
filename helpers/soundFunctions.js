@@ -21,43 +21,46 @@ export const playSound = (voiceChannel, sound) => {
     player.play(resource);
 }
 
-export const playRandomSound = (player) => {
-    let remainingSounds = [];
-    let playedSounds = [];
+let remainingSounds = [];
+let playedSounds = [];
 
+// Array of files you want to exclude
+const excludedFiles = ['ciaooo.mp3'];
+
+export const playRandomSound = (player) => {
     try {
         if (remainingSounds.length === 0) {
-            const sounds = fs.readdirSync(assetsPath).filter(file => file.endsWith('.mp3') && file != 'ciaooo.mp3');
+            const soundFiles = fs.readdirSync(assetsPath)
+                .filter(file => file.endsWith('.mp3') && !excludedFiles.includes(file));
 
-            if (sounds.length === 0) {
-                console.log('No audio files found in the assets folder.');
+            if (soundFiles.length === 0) {
+                console.log('No audio files found in the assets folder after excluding some files.');
                 return;
             }
 
-            remainingSounds = shuffleArray(sounds);
+            // Shuffle the sounds and reset arrays
+            remainingSounds = shuffleArray(soundFiles);
             playedSounds = [];
         }
 
-        const randomSound = remainingSounds.pop();
+        // Pop a sound to play from the shuffled array
+        const randomSoundFileName = remainingSounds.pop();
 
-        playedSounds.push(randomSound);
+        // Track played sounds
+        playedSounds.push(randomSoundFileName);
 
-        const resource = createAudioResource(path.join(assetsPath, randomSound));
-        player.play(resource);
+        // Play the selected sound
+        const audioResource = createAudioResource(path.join(assetsPath, randomSoundFileName));
+        player.play(audioResource);
 
-        player.on('idle', () => {
-            console.log('Finished playing:', randomSound);
-        });
+        console.log(`Playing: ${randomSoundFileName}`);
 
-        player.on('error', error => {
-            console.error('Error playing audio:', error.message);
-        });
     } catch (error) {
         console.error('Error in playRandomSound:', error.message);
     }
 };
 
-// Function to shuffle an array (Fisher-Yates shuffle)
+// Fisher-Yates shuffle
 const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
