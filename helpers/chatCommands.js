@@ -8,4 +8,4 @@ export const chatCommands = {
     leaveVoiceChannel: { cmd: "!leave", description: `Disconnetti ${botName} dalla chat vocale` },
     helicopter: { cmd: "!heli", description: "Helicoper helicopter" },
     yeahBoy: { cmd: "!yb", description: "Yeah boiii" }
-}
+};

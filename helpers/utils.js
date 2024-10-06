@@ -11,17 +11,17 @@ const assetsPath = path.resolve(__filename, '../../assets');
 export const greetAll = (player) => {
     const resource = createAudioResource(path.join(assetsPath, "ahhh.mp3"));
     player.play(resource);
-}
+};
 
 export const playSound = (voiceChannel, sound) => {
-    const connection = joinVoiceChat(voiceChannel)
+    const connection = joinVoiceChat(voiceChannel);
 
     const player = createAudioPlayer();
     connection.subscribe(player);
 
     const audioResource = createAudioResource(path.join(assetsPath, sound));
     player.play(audioResource);
-}
+};
 
 let remainingSounds = [];
 let playedSounds = [];
@@ -80,7 +80,7 @@ export const joinVoiceChat = (voiceChannel) => {
     });
 
     return voiceConnection;
-}
+};
 
 export const leaveVoiceChat = (connection) => {
     console.log('No members left in the voice channel. Leaving...');
