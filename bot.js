@@ -3,10 +3,9 @@ import { Client, GatewayIntentBits } from 'discord.js';
 import dotenv from 'dotenv';
 import { chatCommands } from './helpers/chatCommands.js';
 import { greetAll, joinVoiceChat, leaveVoiceChat, playRandomSound, playSound } from './helpers/utils.js';
+import { botName, randomSoundTimeInterval } from './helpers/appConfig.js';
 
 dotenv.config();
-
-const botName = "Il Mogi Bot";
 
 const client = new Client({
     intents: [
@@ -76,12 +75,10 @@ client.on('messageCreate', async message => {
             // Play sound as soon as the bot joins the voice channel
             greetAll(player);
 
-            const timeInterval = 1000 * 60 * 4;
-
             const voiceChannelMembers = voiceChannel.members.filter(member => !member.user.bot);
 
             // Set interval to play a random sound
-            setInterval(() => { playRandomSound(player); }, timeInterval);
+            setInterval(() => { playRandomSound(player); }, randomSoundTimeInterval);
 
             // Leave if no members are in the voice channel
             if (connection && voiceChannelMembers.size === 0) {
