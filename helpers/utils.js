@@ -6,6 +6,7 @@ import {
   joinVoiceChannel,
 } from "@discordjs/voice";
 import { fileURLToPath } from "url";
+import { botName, randomSoundTimeInterval } from "./appConfig.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const assetsPath = path.resolve(__filename, "../../assets");
@@ -13,7 +14,7 @@ const assetsPath = path.resolve(__filename, "../../assets");
 // SOUND FUNCTIONS
 
 export const greetAll = (player) => {
-  const resource = createAudioResource(path.join(assetsPath, "ahhh.mp3"));
+  const resource = createAudioResource(path.join(assetsPath, "un-pollo.mp3"));
   player.play(resource);
 };
 
@@ -93,6 +94,32 @@ export const joinVoiceChat = (voiceChannel) => {
 };
 
 export const leaveVoiceChat = (connection) => {
-  console.log("No members left in the voice channel. Leaving...");
+  console.log(`No members left in the voice channel. ${botName} has left the chat.`);
   connection.destroy();
 };
+
+export const joinVoiceChatAndPlayRandomSounds = (voiceChannel) => {
+  const connection = joinVoiceChat(voiceChannel);
+  const player = createAudioPlayer();
+  connection.subscribe(player);
+
+  console.log(`${botName} has joined the voice channel.`);
+
+  // Play sound as soon as the bot joins the voice channel
+  greetAll(player);
+
+  // Set interval to play a random sound
+  const intervalId = setInterval(() => {
+    const voiceChannelMembers = voiceChannel.members.filter(
+      (member) => !member.user.bot
+    );
+
+    // Check if there are any non-bot members in the voice channel
+    if (voiceChannelMembers.size > 0) {
+      playRandomSound(player);
+    } else {
+      // Stop the interval if no members are present
+      clearInterval(intervalId);
+    }
+  }, randomSoundTimeInterval);
+}

@@ -27,4 +27,3 @@
 1. Play specific sound when user enters/leaves the chat
 2. Remove greetAll function (improve and use playSound - remove joinChannel from it)
 3. Have bot join the voice channel as soon as there are members in the call (no need to use !join)
-4. Add eslint
