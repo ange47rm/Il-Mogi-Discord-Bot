@@ -94,7 +94,9 @@ export const joinVoiceChat = (voiceChannel) => {
 };
 
 export const leaveVoiceChat = (connection) => {
-  console.log(`No members left in the voice channel. ${botName} has left the chat.`);
+  console.log(
+    `No members left in the voice channel. ${botName} has left the chat.`,
+  );
   connection.destroy();
 };
 
@@ -111,7 +113,7 @@ export const joinVoiceChatAndPlayRandomSounds = (voiceChannel) => {
   // Set interval to play a random sound
   const intervalId = setInterval(() => {
     const voiceChannelMembers = voiceChannel.members.filter(
-      (member) => !member.user.bot
+      (member) => !member.user.bot,
     );
 
     // Check if there are any non-bot members in the voice channel
@@ -122,4 +124,4 @@ export const joinVoiceChatAndPlayRandomSounds = (voiceChannel) => {
       clearInterval(intervalId);
     }
   }, randomSoundTimeInterval);
-}
+};
