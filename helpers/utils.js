@@ -7,6 +7,7 @@ import {
 } from "@discordjs/voice";
 import { fileURLToPath } from "url";
 import { botName, randomSoundTimeInterval } from "./appConfig.js";
+import { ChannelType } from "discord.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const assetsPath = path.resolve(__filename, "../../assets");
@@ -124,4 +125,31 @@ export const joinVoiceChatAndPlayRandomSounds = (voiceChannel) => {
       clearInterval(intervalId);
     }
   }, randomSoundTimeInterval);
+};
+
+export const getActiveVoiceChannelIfAvailable = async (client) => {
+  // Check all guilds the bot is part of
+  for (const [_, guild] of client.guilds.cache) {
+    try {
+      // Ensure the guild cache is up-to-date
+      await guild.fetch();
+      const voiceChannels = guild.channels.cache.filter(
+        (channel) => channel.type === ChannelType.GuildVoice,
+      );
+
+      for (const [_, channel] of voiceChannels) {
+        // Filter out bot users in the channel
+        const activeMembers = channel.members.filter(
+          (member) => !member.user.bot,
+        );
+
+        // If active members are present in the voice channel, return it
+        if (activeMembers.size > 0) {
+          return channel;
+        }
+      }
+    } catch (error) {
+      console.error(`Error checking guild ${guild.name}:`, error.message);
+    }
+  }
 };

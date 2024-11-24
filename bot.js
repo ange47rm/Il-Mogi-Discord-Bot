@@ -1,9 +1,15 @@
 import { getVoiceConnection } from "@discordjs/voice";
-import { Client, GatewayIntentBits } from "discord.js";
+import {
+  ChannelType,
+  Client,
+  GatewayIntentBits,
+  VoiceChannel,
+} from "discord.js";
 import dotenv from "dotenv";
 import { botName } from "./helpers/appConfig.js";
 import { chatCommands } from "./helpers/chatCommands.js";
 import {
+  getActiveVoiceChannelIfAvailable,
   joinVoiceChatAndPlayRandomSounds,
   leaveVoiceChat,
   playSound,
@@ -20,12 +26,20 @@ const client = new Client({
   ],
 });
 
-client.once("ready", () => {
+client.once("ready", async () => {
   console.log(`${botName} is running`);
   console.log("");
   console.log("Author: github.com/ange47rm");
   console.log("");
   console.log(`Logged in as ${client.user.tag}!`);
+
+  const activeVoiceChannel = await getActiveVoiceChannelIfAvailable(client);
+
+  if (activeVoiceChannel) {
+    joinVoiceChatAndPlayRandomSounds(activeVoiceChannel);
+  }
+
+  getActiveVoiceChannelIfAvailable(client);
 });
 
 // Message reactions
