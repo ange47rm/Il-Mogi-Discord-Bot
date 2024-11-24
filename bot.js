@@ -1,10 +1,5 @@
 import { getVoiceConnection } from "@discordjs/voice";
-import {
-  ChannelType,
-  Client,
-  GatewayIntentBits,
-  VoiceChannel,
-} from "discord.js";
+import { Client, GatewayIntentBits } from "discord.js";
 import dotenv from "dotenv";
 import { botName } from "./helpers/appConfig.js";
 import { chatCommands } from "./helpers/chatCommands.js";
