@@ -14,4 +14,5 @@ export const chatCommands = {
   },
   helicopter: { cmd: "!heli", description: "Helicoper helicopter" },
   yeahBoy: { cmd: "!yb", description: "Yeah boiii" },
+  halo: { cmd: "!halo", description: "Halo enemy laughter" }
 };

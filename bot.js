@@ -67,6 +67,13 @@ client.on("messageCreate", (message) => {
   }
 });
 
+client.on("messageCreate", (message) => {
+  if (message.content === chatCommands.halo.cmd) {
+    playSound(message.member.voice.channel, "halo-elite-laugh.mp3");
+    message.react("👽");
+  }
+});
+
 // Join and play sounds in a voice channel
 client.on("messageCreate", async (message) => {
   const voiceChannel = message.member.voice.channel;
