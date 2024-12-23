@@ -109,7 +109,7 @@ export const joinVoiceChatAndPlayRandomSounds = (voiceChannel) => {
   console.log(`${botName} has joined the voice channel.`);
 
   // Play sound as soon as the bot joins the voice channel
-  greetAll(player);
+  // greetAll(player);
 
   // Set interval to play a random sound
   const intervalId = setInterval(() => {
