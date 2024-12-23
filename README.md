@@ -17,3 +17,7 @@ Run `node bot.js` to run the bot locally.
 Any changes made to the code, are to be deployed manually to Replit (update the Replit code or re-import the project from Github and add the "secret" in the .env file).
 
 Uptimerobot status monitor link: https://stats.uptimerobot.com/amAF6Re2Ut (no longer valid - to be updated or removed)
+
+**Current issues**
+
+TBC - It seems that if a sound is manually played using a chat command, the random execution of sounds that's already running in the background is halted.
