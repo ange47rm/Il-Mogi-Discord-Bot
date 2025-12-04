@@ -21,7 +21,7 @@ const client = new Client({
   ],
 });
 
-client.once("ready", async () => {
+client.once("clientReady", async () => {
   console.log(`${botName} is running`);
   console.log("");
   console.log("Author: github.com/ange47rm");
